@@ -11,6 +11,7 @@ import { user } from '../services/user-data.model';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  errMessage: String;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -19,17 +20,11 @@ export class LoginComponent implements OnInit {
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
-
-    console.log(this.authService.userAuthState);
   }
 
   submitLoginForm() {
-    console.log(this.loginForm.value);
     this.authService.login(this.loginForm.value).subscribe(
       (data: user) => {
-        console.log(data);
-        console.log(this.authService.currentUserId);
-        console.log(this.authService.userAuthState);
         if (data.role === 'employee') {
           this.router.navigate(['/', 'home-emp']);
         } else {
@@ -38,7 +33,7 @@ export class LoginComponent implements OnInit {
       },
       (error) => {
         console.log(error);
-        console.log(error.error.message);
+        this.errMessage = error.error.message;
       }
     );
   }

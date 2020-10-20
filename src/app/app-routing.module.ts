@@ -1,3 +1,4 @@
+import { CreateNewEmployeeComponent } from './create-new-employee/create-new-employee.component';
 import { HomeEmployeeComponent } from './home-employee/home-employee.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -8,6 +9,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home-emp', component: HomeEmployeeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'create-new-employee', component: CreateNewEmployeeComponent },
 ];
 
 @NgModule({

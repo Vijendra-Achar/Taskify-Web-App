@@ -17,8 +17,6 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  authState() {}
-
   login(cred) {
     return this.http
       .post('http://localhost:5000/api/v1/user/loginUser', cred)
@@ -34,6 +32,13 @@ export class AuthService {
           }
         })
       );
+  }
+
+  signUp(cred) {
+    return this.http.post(
+      'http://localhost:5000/api/v1/user/signUpNewUser',
+      cred
+    );
   }
 
   logOut() {
