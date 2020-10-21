@@ -13,6 +13,8 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { HomeEmployeeComponent } from './home-employee/home-employee.component';
 import { CreateNewEmployeeComponent } from './create-new-employee/create-new-employee.component';
+import { CreateNewTaskComponent } from './create-new-task/create-new-task.component';
+import { ViewTaskComponent } from './view-task/view-task.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { CreateNewEmployeeComponent } from './create-new-employee/create-new-emp
     HomeEmployeeComponent,
     CreateNewEmployeeComponent,
     EmployeeTasksAssignComponent,
+    CreateNewTaskComponent,
+    ViewTaskComponent,
   ],
   imports: [
     BrowserModule,

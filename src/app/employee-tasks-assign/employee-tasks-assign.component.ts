@@ -1,4 +1,3 @@
-import { task } from './../services/task.model';
 import { user } from './../services/user-data.model';
 import { TasksService } from './../services/tasks.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';

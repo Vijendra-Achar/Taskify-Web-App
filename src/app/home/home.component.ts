@@ -1,5 +1,7 @@
+import { user } from './../services/user-data.model';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { take, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -17,13 +19,18 @@ export class HomeComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.currentUserId = this.authService.currentUserId;
+    this.currentUserId = window.localStorage.getItem('userId');
     this.currentUserEmail = this.authService.currentUserEmail;
-    this.currentUserName = this.authService.currentUserName;
     this.currentUserRole = this.authService.currentUserRole;
 
+    this.authService
+      .getOneEmployee(this.currentUserId)
+      .pipe(take(1))
+      .subscribe((data: user) => {
+        this.currentUserName = data.data.user.username;
+      });
+
     this.authService.getAllEmployees().subscribe((data) => {
-      console.log(data.data.user);
       this.allEmployees = data.data.user;
     });
   }

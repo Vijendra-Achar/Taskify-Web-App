@@ -1,0 +1,29 @@
+<div class="container">
+  <h1 class="display-5">Task Details and Notes</h1>
+
+  <br />
+
+  <h3 class="display-5">Title : {{ currentTask?.title }}</h3>
+  <h4 class="display-6">Description : {{ currentTask?.description }}</h4>
+  <h5 class="display-6">Deadline : {{ currentTask?.deadline |date }}</h5>
+
+  <br />
+
+  <h2 class="display-6">Notes</h2>
+
+  <br />
+
+  <div *ngIf="!allNotesForCurrentTask || allNotesForCurrentTask?.length <= 0">
+    <h6 class="display-6"> No Notes Yet</h6>
+  </div>
+
+
+  <div *ngFor="let note of allNotesForCurrentTask" class="card" style="width: 50vw;">
+    <div class="card-body">
+      <h5 class="card-title">{{ note?.heading }}</h5>
+      <p class="card-text">{{ note?.notes }}</p>
+    </div>
+  </div>
+
+
+</div>

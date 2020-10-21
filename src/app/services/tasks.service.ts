@@ -20,4 +20,23 @@ export class TasksService {
         })
       );
   }
+
+  createNewTask(createdBy: string, assignedTo: string, taskData: object) {
+    return this.http.post(
+      `http://localhost:5000/api/v1/task/createTask/${createdBy}/${assignedTo}`,
+      taskData
+    );
+  }
+
+  getOneTaskById(taskid) {
+    return this.http.get(
+      `http://localhost:5000/api/v1/task/getOneTaskById/${taskid}`
+    );
+  }
+
+  getAllNotesForATask(taskId) {
+    return this.http.get(
+      `http://localhost:5000/api/v1/taskNotes/allTaskNotes/${taskId}`
+    );
+  }
 }

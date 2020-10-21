@@ -26,6 +26,7 @@ export class AuthService {
         tap((data: user) => {
           if (data.token) {
             window.localStorage.setItem('jwt-auth-token', data.token);
+            window.localStorage.setItem('userId', data.data.user._id);
             this.userAuthState = true;
             this.currentUserId = data.data.user._id;
             this.currentUserEmail = data.data.user.email;
@@ -59,6 +60,7 @@ export class AuthService {
 
   logOut() {
     window.localStorage.removeItem('jwt-auth-token');
+    window.localStorage.removeItem('userId');
     this.userAuthState = false;
     this.router.navigate(['/login']);
   }

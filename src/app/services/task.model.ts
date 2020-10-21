@@ -17,3 +17,16 @@ export interface task {
   results: number;
   status: String;
 }
+
+export interface taskNotes {
+  data: {
+    taskNotes: [
+      {
+        _id: string;
+        heading: string;
+        notes: string;
+        taskId: object;
+      }
+    ];
+  };
+}

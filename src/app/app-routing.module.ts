@@ -1,3 +1,6 @@
+import { ViewTaskComponent } from './view-task/view-task.component';
+import { AuthGuard } from './services/auth.guard';
+import { CreateNewTaskComponent } from './create-new-task/create-new-task.component';
 import { EmployeeTasksAssignComponent } from './employee-tasks-assign/employee-tasks-assign.component';
 import { CreateNewEmployeeComponent } from './create-new-employee/create-new-employee.component';
 import { HomeEmployeeComponent } from './home-employee/home-employee.component';
@@ -7,11 +10,33 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'emp-tasks-assign/:uid', component: EmployeeTasksAssignComponent },
-  { path: 'home-emp', component: HomeEmployeeComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  {
+    path: 'emp-tasks-assign/:uid',
+    component: EmployeeTasksAssignComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'create-new-task/:uid',
+    component: CreateNewTaskComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'view-task/:taskId',
+    component: ViewTaskComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-emp',
+    component: HomeEmployeeComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'login', component: LoginComponent },
-  { path: 'create-new-employee', component: CreateNewEmployeeComponent },
+  {
+    path: 'create-new-employee',
+    component: CreateNewEmployeeComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
