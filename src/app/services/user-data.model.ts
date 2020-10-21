@@ -10,3 +10,16 @@ export interface user {
   role: string;
   token: string;
 }
+
+export interface allUsers {
+  data: {
+    user: [
+      {
+        role: String;
+        _id: String;
+        username: String;
+        email: String;
+      }
+    ];
+  };
+}

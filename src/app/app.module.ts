@@ -1,7 +1,9 @@
+import { EmployeeTasksAssignComponent } from './employee-tasks-assign/employee-tasks-assign.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,9 +23,11 @@ import { CreateNewEmployeeComponent } from './create-new-employee/create-new-emp
     LoginComponent,
     HomeEmployeeComponent,
     CreateNewEmployeeComponent,
+    EmployeeTasksAssignComponent,
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,

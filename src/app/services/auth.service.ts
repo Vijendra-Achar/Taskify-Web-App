@@ -1,4 +1,4 @@
-import { user } from './user-data.model';
+import { allUsers, user } from './user-data.model';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -14,6 +14,8 @@ export class AuthService {
   currentUserEmail: String;
   currentUserName: String;
   currentUserRole: String;
+
+  allEmployees: [{}];
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -38,6 +40,20 @@ export class AuthService {
     return this.http.post(
       'http://localhost:5000/api/v1/user/signUpNewUser',
       cred
+    );
+  }
+
+  getAllEmployees() {
+    return this.http.get('http://localhost:5000/api/v1/user/getAllUser').pipe(
+      tap((data: allUsers) => {
+        this.allEmployees = data.data.user;
+      })
+    );
+  }
+
+  getOneEmployee(uid) {
+    return this.http.get(
+      `http://localhost:5000/api/v1/user/getCurrentUser/${uid}`
     );
   }
 

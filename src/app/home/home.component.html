@@ -4,5 +4,32 @@
   </div>
   <h1 class="display-4">Hello, {{ currentUserName }}</h1>
 
-  <button routerLink="/create-new-employee" class="btn btn-primary"> Create New Employee Credentials </button>
+  <br>
+
+  <h3 class="display-6">Here is a List Of your Employees</h3>
+  <br/>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Employee ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">Assign Tasks</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of allEmployees">
+        <th scope="row">{{ employee._id }}</th>
+        <td>{{ employee.username }}</td>
+        <td>{{ employee.email }}</td>
+        <td><a routerLink="/emp-tasks-assign/{{ employee._id }}">Assign</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br/>
+
+  <div class="center">
+    <button routerLink="/create-new-employee" class="btn btn-primary"> Create New Employee Credentials </button>
+  </div>
 </div>

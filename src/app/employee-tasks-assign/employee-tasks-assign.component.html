@@ -1,0 +1,31 @@
+<div class="container">
+
+  <h3 class="display-6">Here are the Tasks Assigned to {{ selectedEmployeeName }}</h3>
+
+  <br/>
+
+  <h3 *ngIf="currentEmployeeTasks?.length === 0"> No Tasks </h3>
+
+  <table *ngIf="currentEmployeeTasks?.length > 0" class="table">
+    <thead>
+      <tr>
+        <th scope="col">Task ID</th>
+        <th scope="col">Title</th>
+        <th scope="col">Dead Line</th>
+        <th scope="col">Status</th>
+        <th scope="col">View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of currentEmployeeTasks">
+        <th scope="row">{{ task.id }}</th>
+        <td>{{ task.title }}</td>
+        <td>{{task.deadline | date}}</td>
+        <td> <div *ngIf="task.completed" >✔</div> <div *ngIf="!task.completed" >❌</div> </td>
+        <td><a href="#">View</a></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</div>

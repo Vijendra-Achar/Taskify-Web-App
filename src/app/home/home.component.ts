@@ -12,6 +12,8 @@ export class HomeComponent implements OnInit {
   currentUserName: String;
   currentUserRole: String;
 
+  allEmployees;
+
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
@@ -19,6 +21,11 @@ export class HomeComponent implements OnInit {
     this.currentUserEmail = this.authService.currentUserEmail;
     this.currentUserName = this.authService.currentUserName;
     this.currentUserRole = this.authService.currentUserRole;
+
+    this.authService.getAllEmployees().subscribe((data) => {
+      console.log(data.data.user);
+      this.allEmployees = data.data.user;
+    });
   }
 
   logOutNow() {
