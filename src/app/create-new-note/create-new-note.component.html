@@ -1,0 +1,25 @@
+<div class="container">
+
+  <br />
+
+  <form [formGroup]="newNoteForm" (ngSubmit)="createNewNote()" class="col-md-8">
+
+    <h1 class="display-5 "> Insert a New Note </h1><br />
+
+    <div *ngIf="" class="alert alert-danger"> </div>
+
+    <div class="form-group">
+      <label for="heading">Note Heading</label>
+      <input type="text" formControlName="heading" class="form-control" id="heading" placeholder="Enter Heading">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Notes Details</label>
+      <textarea formControlName="notes" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <button routerLink="/view-task/{{ currentTaskId }}" class="btn btn-outline">Go Back</button>
+  </form>
+
+</div>

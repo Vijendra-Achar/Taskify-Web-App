@@ -1,3 +1,4 @@
+import { CreateNewNoteComponent } from './create-new-note/create-new-note.component';
 import { ViewTaskComponent } from './view-task/view-task.component';
 import { AuthGuard } from './services/auth.guard';
 import { CreateNewTaskComponent } from './create-new-task/create-new-task.component';
@@ -24,6 +25,11 @@ const routes: Routes = [
   {
     path: 'view-task/:taskId',
     component: ViewTaskComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'create-new-note/:taskId',
+    component: CreateNewNoteComponent,
     canActivate: [AuthGuard],
   },
   {

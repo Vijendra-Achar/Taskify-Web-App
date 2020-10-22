@@ -39,4 +39,6 @@ export class TasksService {
       `http://localhost:5000/api/v1/taskNotes/allTaskNotes/${taskId}`
     );
   }
+
+  createNewTaskNote(taskId, notesheading, notesDesc, writtenBy) {}
 }

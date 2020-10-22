@@ -15,6 +15,7 @@ import { HomeEmployeeComponent } from './home-employee/home-employee.component';
 import { CreateNewEmployeeComponent } from './create-new-employee/create-new-employee.component';
 import { CreateNewTaskComponent } from './create-new-task/create-new-task.component';
 import { ViewTaskComponent } from './view-task/view-task.component';
+import { CreateNewNoteComponent } from './create-new-note/create-new-note.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ViewTaskComponent } from './view-task/view-task.component';
     EmployeeTasksAssignComponent,
     CreateNewTaskComponent,
     ViewTaskComponent,
+    CreateNewNoteComponent,
   ],
   imports: [
     BrowserModule,

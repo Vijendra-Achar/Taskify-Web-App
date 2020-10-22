@@ -5,7 +5,7 @@
 
   <h3 class="display-5">Title : {{ currentTask?.title }}</h3>
   <h4 class="display-6">Description : {{ currentTask?.description }}</h4>
-  <h5 class="display-6">Deadline : {{ currentTask?.deadline |date }}</h5>
+  <h5 class="display-6">Deadline : {{ currentTask?.deadline | date }}</h5>
 
   <br />
 
@@ -19,11 +19,15 @@
 
 
   <div *ngFor="let note of allNotesForCurrentTask" class="card" style="width: 50vw;">
+    <div class="card-header">
+      {{ note?.heading }}
+    </div>
     <div class="card-body">
-      <h5 class="card-title">{{ note?.heading }}</h5>
-      <p class="card-text">{{ note?.notes }}</p>
+      <h5 class="card-title">{{ note?.notes }}</h5>
+      <p class="card-text">Posted By - {{ note?.writtenBy }}</p>
     </div>
   </div>
 
+  <button routerLink="/create-new-note/{{ currentTaskId }}" class="btn btn-primary">Add New Note</button>
 
 </div>
