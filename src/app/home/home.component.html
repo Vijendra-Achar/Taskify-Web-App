@@ -1,35 +1,84 @@
-<div class="container">
-  <div class="inline">
-    <button (click)="logOutNow()" class="btn btn-danger">Logout</button>
-  </div>
-  <h1 class="display-4">Hello, {{ currentUserName }}</h1>
+<div [ngSwitch]='currentUserRole'>
+  <ng-template [ngSwitchCase]="'manager'">
+    <div class="container">
+      <div class="inline">
+        <button (click)="logOutNow()" class="btn btn-danger">Logout</button>
+      </div>
+      <h1 class="display-4">Hello, {{ currentUserName }}</h1>
 
-  <br>
+      <br>
 
-  <h3 class="display-6">Here is a List Of your Employees</h3>
-  <br />
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Employee ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">E-mail</th>
-        <th scope="col">Assign Tasks</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let employee of allEmployees">
-        <th scope="row">{{ employee?._id }}</th>
-        <td>{{ employee?.username }}</td>
-        <td>{{ employee?.email }}</td>
-        <td><a routerLink="/emp-tasks-assign/{{ employee?._id }}">Assign</a></td>
-      </tr>
-    </tbody>
-  </table>
+      <h3 class="display-6">Here is a List Of your Employees</h3>
+      <br />
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Employee ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Assign Tasks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of allEmployees">
+            <th scope="row">{{ employee?._id }}</th>
+            <td>{{ employee?.username }}</td>
+            <td>{{ employee?.email }}</td>
+            <td><a routerLink="/emp-tasks-assign/{{ employee?._id }}">Assign</a></td>
+          </tr>
+        </tbody>
+      </table>
 
-  <br />
+      <br />
 
-  <div class="center">
-    <button routerLink="/create-new-employee" class="btn btn-primary"> Create New Employee Credentials </button>
-  </div>
+      <div class="center">
+        <button routerLink="/create-new-employee" class="btn btn-primary"> Create New Employee Credentials </button>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <ng-template [ngSwitchCase]="'employee'">
+    <div class="container">
+
+      <div class="inline">
+        <button (click)="logOutNow()" class="btn btn-danger">Logout</button>
+      </div>
+      <h1 class="display-4">Hello, {{ currentUserName }}</h1>
+
+      <br />
+
+      <h3 class="display-6">Here is the List of all the tasks assigned to you</h3>
+
+      <br />
+
+      <h3 *ngIf="currentEmployeeTasks?.length === 0">No Tasks</h3>
+
+      <table *ngIf="currentEmployeeTasks?.length > 0" class="table">
+        <thead>
+          <tr>
+            <th scope="col">Task ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Dead Line</th>
+            <th scope="col">Status</th>
+            <th scope="col">View</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of currentEmployeeTasks">
+            <th scope="row">{{ task.id }}</th>
+            <td>{{ task.title }}</td>
+            <td>{{ task.deadline | date }}</td>
+            <td>
+              <div *ngIf="task.completed">✔</div>
+              <div *ngIf="!task.completed">❌</div>
+            </td>
+            <td><a routerLink="/view-task/{{ task.id }}">View</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </ng-template>
+
 </div>

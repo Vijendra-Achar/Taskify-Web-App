@@ -35,9 +35,7 @@ export class CreateNewTaskComponent implements OnInit {
     this.taskService
       .createNewTask(createdBy, this.assignableUserId, this.taskForm.value)
       .subscribe((data) => {
-        console.log(data);
         this.router.navigate(['/', 'emp-tasks-assign', this.assignableUserId]);
       });
-    console.log(this.taskForm.value);
   }
 }

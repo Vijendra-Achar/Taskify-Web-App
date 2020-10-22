@@ -33,7 +33,6 @@ export class EmployeeTasksAssignComponent implements OnInit, OnDestroy {
       .getTasksAssignedToEmployee(this.selectedEmployeeId)
       .subscribe((data) => {
         this.currentEmployeeTasks = data.data.tasks;
-        console.log(this.currentEmployeeTasks);
       });
 
     this.authSub = this.authService

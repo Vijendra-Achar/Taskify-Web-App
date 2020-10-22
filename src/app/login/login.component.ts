@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.value).subscribe(
       (data: user) => {
         if (data.role === 'employee') {
-          this.router.navigate(['/', 'home-emp']);
+          this.router.navigate(['/']);
         } else {
           this.router.navigate(['/']);
         }
