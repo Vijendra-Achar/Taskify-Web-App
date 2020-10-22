@@ -40,5 +40,25 @@ export class TasksService {
     );
   }
 
-  createNewTaskNote(taskId, notesheading, notesDesc, writtenBy) {}
+  createNewTaskNote(taskId, notesheading, notesDesc, writtenBy) {
+    const databody = {
+      heading: notesheading,
+      notes: notesDesc,
+      writtenBy: writtenBy,
+    };
+
+    return this.http.post(
+      `http://localhost:5000/api/v1/taskNotes/createNewNote/${taskId}`,
+      databody
+    );
+  }
+
+  changeTaskState(taskId, state) {
+    return this.http.patch(
+      `http://localhost:5000/api/v1/task/changeTaskStatus/${taskId}`,
+      {
+        completed: state,
+      }
+    );
+  }
 }

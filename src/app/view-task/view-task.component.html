@@ -9,6 +9,12 @@
 
   <br />
 
+  <button *ngIf="!currentTask?.completed" (click)="changeState(true)" class="btn btn-success">Mark this Task as
+    Done</button>
+  <button *ngIf="currentTask?.completed" (click)="changeState(false)" class="btn btn-success">Re-Open Task</button>
+
+  <br />
+
   <h2 class="display-6">Notes</h2>
 
   <br />

@@ -1,7 +1,7 @@
 import { take } from 'rxjs/operators';
 import { task, taskNotes } from './../services/task.model';
 import { TasksService } from './../services/tasks.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -17,7 +17,8 @@ export class ViewTaskComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private taskService: TasksService
+    private taskService: TasksService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +36,14 @@ export class ViewTaskComponent implements OnInit {
       .getAllNotesForATask(this.currentTaskId)
       .subscribe((data: taskNotes) => {
         this.allNotesForCurrentTask = data.data.taskNotes;
+      });
+  }
+
+  changeState(state) {
+    this.taskService
+      .changeTaskState(this.currentTaskId, state)
+      .subscribe(() => {
+        this.router.navigate(['/']);
       });
   }
 }
