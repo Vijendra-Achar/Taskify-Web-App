@@ -11,6 +11,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  isLoading: boolean = false;
+
   currentUserId: String;
   currentUserEmail: String;
   currentUserName: String;
@@ -28,6 +30,8 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
+
     this.currentUserId = window.localStorage.getItem('userId');
     this.currentUserEmail = this.authService.currentUserEmail;
 
@@ -41,12 +45,14 @@ export class HomeComponent implements OnInit {
 
     this.authService.getAllEmployees().subscribe((data) => {
       this.allEmployees = data.data.user;
+      this.isLoading = false;
     });
 
     this.taskSub = this.taskService
       .getTasksAssignedToEmployee(this.currentUserId)
       .subscribe((data) => {
         this.currentEmployeeTasks = data.data.tasks;
+        this.isLoading = false;
       });
   }
 

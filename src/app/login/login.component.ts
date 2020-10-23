@@ -10,6 +10,7 @@ import { user } from '../services/user-data.model';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  isLoading: boolean = false;
   loginForm: FormGroup;
   errMessage: String;
 
@@ -23,17 +24,16 @@ export class LoginComponent implements OnInit {
   }
 
   submitLoginForm() {
+    this.isLoading = true;
     this.authService.login(this.loginForm.value).subscribe(
       (data: user) => {
-        if (data.role === 'employee') {
-          this.router.navigate(['/']);
-        } else {
-          this.router.navigate(['/']);
-        }
+        this.router.navigate(['/']);
+        this.isLoading = false;
       },
       (error) => {
         console.log(error);
         this.errMessage = error.error.message;
+        this.isLoading = false;
       }
     );
   }

@@ -8,6 +8,9 @@ import { retry, catchError, tap, map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
+  devURL: string = `http://localhost:5000`;
+  prodURL: string = `https://taskify-backend-api.herokuapp.com`;
+
   userAuthState: boolean = false;
 
   currentUserId: String;
@@ -20,32 +23,27 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   login(cred) {
-    return this.http
-      .post('http://localhost:5000/api/v1/user/loginUser', cred)
-      .pipe(
-        tap((data: user) => {
-          if (data.token) {
-            window.localStorage.setItem('jwt-auth-token', data.token);
-            window.localStorage.setItem('userId', data.data.user._id);
-            this.userAuthState = true;
-            this.currentUserId = data.data.user._id;
-            this.currentUserEmail = data.data.user.email;
-            this.currentUserName = data.data.user.username;
-            this.currentUserRole = data.data.user.role;
-          }
-        })
-      );
-  }
-
-  signUp(cred) {
-    return this.http.post(
-      'http://localhost:5000/api/v1/user/signUpNewUser',
-      cred
+    return this.http.post(`${this.prodURL}/api/v1/user/loginUser`, cred).pipe(
+      tap((data: user) => {
+        if (data.token) {
+          window.localStorage.setItem('jwt-auth-token', data.token);
+          window.localStorage.setItem('userId', data.data.user._id);
+          this.userAuthState = true;
+          this.currentUserId = data.data.user._id;
+          this.currentUserEmail = data.data.user.email;
+          this.currentUserName = data.data.user.username;
+          this.currentUserRole = data.data.user.role;
+        }
+      })
     );
   }
 
+  signUp(cred) {
+    return this.http.post(`${this.prodURL}/api/v1/user/signUpNewUser`, cred);
+  }
+
   getAllEmployees() {
-    return this.http.get('http://localhost:5000/api/v1/user/getAllUser').pipe(
+    return this.http.get(`${this.prodURL}/api/v1/user/getAllUser`).pipe(
       tap((data: allUsers) => {
         this.allEmployees = data.data.user;
       })
@@ -53,9 +51,7 @@ export class AuthService {
   }
 
   getOneEmployee(uid) {
-    return this.http.get(
-      `http://localhost:5000/api/v1/user/getCurrentUser/${uid}`
-    );
+    return this.http.get(`${this.prodURL}/api/v1/user/getCurrentUser/${uid}`);
   }
 
   logOut() {

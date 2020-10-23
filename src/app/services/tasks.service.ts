@@ -7,36 +7,37 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class TasksService {
+  devURL: string = `http://localhost:5000`;
+  prodURL: string = `https://taskify-backend-api.herokuapp.com`;
+
   currentEmployeeTasks: [{}];
 
   constructor(private http: HttpClient) {}
 
   getTasksAssignedToEmployee(uid: String) {
-    return this.http
-      .get(`http://localhost:5000/api/v1/task/getMyTasks/${uid}`)
-      .pipe(
-        tap((data: task) => {
-          this.currentEmployeeTasks = data.data.tasks;
-        })
-      );
+    return this.http.get(`${this.prodURL}/api/v1/task/getMyTasks/${uid}`).pipe(
+      tap((data: task) => {
+        this.currentEmployeeTasks = data.data.tasks;
+      })
+    );
   }
 
   createNewTask(createdBy: string, assignedTo: string, taskData: object) {
     return this.http.post(
-      `http://localhost:5000/api/v1/task/createTask/${createdBy}/${assignedTo}`,
+      `${this.prodURL}/api/v1/task/createTask/${createdBy}/${assignedTo}`,
       taskData
     );
   }
 
   getOneTaskById(taskid) {
     return this.http.get(
-      `http://localhost:5000/api/v1/task/getOneTaskById/${taskid}`
+      `${this.prodURL}/api/v1/task/getOneTaskById/${taskid}`
     );
   }
 
   getAllNotesForATask(taskId) {
     return this.http.get(
-      `http://localhost:5000/api/v1/taskNotes/allTaskNotes/${taskId}`
+      `${this.prodURL}/api/v1/taskNotes/allTaskNotes/${taskId}`
     );
   }
 
@@ -48,14 +49,14 @@ export class TasksService {
     };
 
     return this.http.post(
-      `http://localhost:5000/api/v1/taskNotes/createNewNote/${taskId}`,
+      `${this.prodURL}/api/v1/taskNotes/createNewNote/${taskId}`,
       databody
     );
   }
 
   changeTaskState(taskId, state) {
     return this.http.patch(
-      `http://localhost:5000/api/v1/task/changeTaskStatus/${taskId}`,
+      `${this.prodURL}/api/v1/task/changeTaskStatus/${taskId}`,
       {
         completed: state,
       }
