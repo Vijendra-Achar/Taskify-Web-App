@@ -3,7 +3,7 @@
   <div class="col-md-8 ">
     <h1 class="display-5">Create New Task</h1>
 
-  <br/>
+    <br />
 
     <form [formGroup]="taskForm" (ngSubmit)="createNewTask()">
 
@@ -14,19 +14,21 @@
 
       <div class="form-group">
         <label for="description">Task Description</label>
-        <input formControlName="description" type="text" class="form-control" id="description" placeholder="Task Description">
+        <input formControlName="description" type="text" class="form-control" id="description"
+          placeholder="Task Description">
       </div>
 
       <div class="form-group">
         <label for="deadline">Dead-Line Date</label>
-        <input formControlName="deadline" type="text" class="form-control" id="deadline" placeholder="Pick a Date">
+        <input formControlName="deadline" type="date" class="form-control" id="deadline" placeholder="Pick a Date">
         <small>Enter Date in the format mm-dd-yyyy</small>
       </div>
 
-      <br/>
+      <br />
 
       <button type="submit" class="btn btn-primary">Create</button>
-      <button routerLink="/emp-tasks-assign/{{ assignableUserId }}" type="button" class="btn btn-outline">Cancel</button>
+      <button routerLink="/emp-tasks-assign/{{ assignableUserId }}" type="button"
+        class="btn btn-outline">Cancel</button>
 
     </form>
 
