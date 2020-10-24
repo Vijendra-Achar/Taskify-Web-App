@@ -13,6 +13,8 @@ export class ViewTaskComponent implements OnInit {
   currentTaskId: string;
   currentTask;
 
+  isLoading: boolean = false;
+
   allNotesForCurrentTask;
 
   constructor(
@@ -22,6 +24,8 @@ export class ViewTaskComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
+
     this.activatedRoute.params.pipe(take(1)).subscribe((data) => {
       this.currentTaskId = data.taskId;
     });
@@ -30,6 +34,7 @@ export class ViewTaskComponent implements OnInit {
       .getOneTaskById(this.currentTaskId)
       .subscribe((data: task) => {
         this.currentTask = data.data.tasks;
+        this.isLoading = false;
       });
 
     this.taskService
@@ -40,10 +45,12 @@ export class ViewTaskComponent implements OnInit {
   }
 
   changeState(state) {
+    this.isLoading = true;
     this.taskService
       .changeTaskState(this.currentTaskId, state)
       .subscribe(() => {
         this.router.navigate(['/']);
+        this.isLoading = false;
       });
   }
 }

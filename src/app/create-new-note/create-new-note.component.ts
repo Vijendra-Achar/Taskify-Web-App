@@ -14,6 +14,8 @@ import { take } from 'rxjs/operators';
 export class CreateNewNoteComponent implements OnInit {
   currentUserId: string = window.localStorage.getItem('userId');
 
+  isLoading: boolean = false;
+
   newNoteForm: FormGroup;
   currentTaskId: string;
   currentUserName: string;
@@ -52,6 +54,7 @@ export class CreateNewNoteComponent implements OnInit {
   }
 
   createNewNote() {
+    this.isLoading = true;
     this.taskService
       .createNewTaskNote(
         this.currentTaskId,
@@ -61,6 +64,7 @@ export class CreateNewNoteComponent implements OnInit {
       )
       .subscribe(() => {
         this.router.navigate(['/', 'view-task', this.currentTaskId]);
+        this.isLoading = false;
       });
   }
 }

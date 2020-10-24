@@ -15,6 +15,8 @@ export class EmployeeTasksAssignComponent implements OnInit, OnDestroy {
   selectedEmployeeId: String;
   selectedEmployeeName: String;
 
+  isLoading: boolean = false;
+
   authSub: Subscription;
   taskSub: Subscription;
 
@@ -25,6 +27,7 @@ export class EmployeeTasksAssignComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.activatedRoute.params.subscribe((value) => {
       this.selectedEmployeeId = value.uid;
     });
@@ -33,6 +36,7 @@ export class EmployeeTasksAssignComponent implements OnInit, OnDestroy {
       .getTasksAssignedToEmployee(this.selectedEmployeeId)
       .subscribe((data) => {
         this.currentEmployeeTasks = data.data.tasks;
+        this.isLoading = false;
       });
 
     this.authSub = this.authService
