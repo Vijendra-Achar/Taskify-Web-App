@@ -1,3 +1,4 @@
+import { take } from 'rxjs/operators';
 import { user } from './../services/user-data.model';
 import { TasksService } from './../services/tasks.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -28,7 +29,7 @@ export class EmployeeTasksAssignComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.activatedRoute.params.subscribe((value) => {
+    this.activatedRoute.params.pipe(take(1)).subscribe((value) => {
       this.selectedEmployeeId = value.uid;
     });
 

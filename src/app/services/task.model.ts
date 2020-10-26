@@ -8,14 +8,15 @@ export interface task {
         assignedTo: user;
         createdBy: user;
         deadline: Date;
-        description: String;
-        _id: String;
-        title: String;
+        percentageOfCompletion: number;
+        description: string;
+        _id: string;
+        title: string;
       }
     ];
   };
   results: number;
-  status: String;
+  status: string;
 }
 
 export interface taskNotes {

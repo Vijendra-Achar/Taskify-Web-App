@@ -1,16 +1,19 @@
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-create-new-employee',
   templateUrl: './create-new-employee.component.html',
   styleUrls: ['./create-new-employee.component.scss'],
 })
-export class CreateNewEmployeeComponent implements OnInit {
+export class CreateNewEmployeeComponent implements OnInit, OnDestroy {
   signUpForm: FormGroup;
   errMessage: String;
+
+  authSub: Subscription;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -24,7 +27,7 @@ export class CreateNewEmployeeComponent implements OnInit {
 
   signUp() {
     console.log(this.signUpForm.value);
-    this.authService.signUp(this.signUpForm.value).subscribe(
+    this.authSub = this.authService.signUp(this.signUpForm.value).subscribe(
       () => {
         this.router.navigate(['/']);
       },
@@ -32,5 +35,9 @@ export class CreateNewEmployeeComponent implements OnInit {
         this.errMessage = err.error.error;
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.authSub.unsubscribe();
   }
 }

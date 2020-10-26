@@ -62,4 +62,13 @@ export class TasksService {
       }
     );
   }
+
+  updatetaskPercentage(percentage, taskId) {
+    return this.http.patch(
+      `${this.prodURL}/api/v1/task/updateTaskPercentage/${taskId}`,
+      {
+        percentageOfCompletion: percentage,
+      }
+    );
+  }
 }

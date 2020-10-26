@@ -1,7 +1,7 @@
 import { TasksService } from './../services/tasks.service';
 import { user } from './../services/user-data.model';
 import { AuthService } from './../services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { take, map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
 
   currentUserId: String;
@@ -24,6 +24,9 @@ export class HomeComponent implements OnInit {
 
   taskSub: Subscription;
 
+  authEmp: Subscription;
+  authMan: Subscription;
+
   constructor(
     private authService: AuthService,
     private taskService: TasksService
@@ -35,7 +38,7 @@ export class HomeComponent implements OnInit {
     this.currentUserId = window.localStorage.getItem('userId');
     this.currentUserEmail = this.authService.currentUserEmail;
 
-    this.authService
+    this.authEmp = this.authService
       .getOneEmployee(this.currentUserId)
       .pipe(take(1))
       .subscribe((data: user) => {
@@ -43,7 +46,7 @@ export class HomeComponent implements OnInit {
         this.currentUserRole = data.data.user.role;
       });
 
-    this.authService.getAllEmployees().subscribe((data) => {
+    this.authMan = this.authService.getAllEmployees().subscribe((data) => {
       this.allEmployees = data.data.user;
       this.isLoading = false;
     });
@@ -59,5 +62,11 @@ export class HomeComponent implements OnInit {
   logOutNow() {
     this.authService.logOut();
     this.authService.userAuthState;
+  }
+
+  ngOnDestroy() {
+    this.authEmp.unsubscribe();
+    this.authMan.unsubscribe();
+    this.taskSub.unsubscribe();
   }
 }

@@ -22,6 +22,7 @@
         <table class="table">
           <thead>
             <tr>
+              <th scope="col">Sl. No.</th>
               <th scope="col">Employee ID</th>
               <th scope="col">Name</th>
               <th scope="col">E-mail</th>
@@ -29,8 +30,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let employee of allEmployees">
-              <th scope="row">{{ employee?._id }}</th>
+            <tr *ngFor="let employee of allEmployees; let i = index">
+              <th scope="row">{{ (i+1) }}</th>
+              <td>{{ employee?._id }}</td>
               <td>{{ employee?.username }}</td>
               <td>{{ employee?.email }}</td>
               <td><a routerLink="/emp-tasks-assign/{{ employee?._id }}">Assign / View</a></td>

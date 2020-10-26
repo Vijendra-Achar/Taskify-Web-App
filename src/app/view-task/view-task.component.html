@@ -7,46 +7,72 @@
   </div>
 
   <div *ngIf="!isLoading">
-    <h1 class="display-5">Task Details and Notes</h1>
+    <h1 class="display-4">Task Details and Notes</h1>
 
     <br />
 
-    <h3 class="display-5">Title : {{ currentTask?.title }}</h3>
+    <h3 class="display-5">Title : {{ currentTask?.title }}</h3><br />
     <h4 class="display-6">Description : {{ currentTask?.description }}</h4>
     <h5 class="display-6">Deadline : {{ currentTask?.deadline | date }}</h5>
 
     <br />
 
-    <button *ngIf="!currentTask?.completed" (click)="changeState(true)" class="btn btn-success">Mark this Task as
-      Done</button>
-
-    <button *ngIf="currentTask?.completed" (click)="changeState(false)" class="btn btn-success">Re-Open Task</button>
-    <div *ngIf="isLoading" class="spinner-border" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <br />
-
-    <h2 class="display-6">Notes</h2>
-
-    <br />
-
-    <div *ngIf="!allNotesForCurrentTask || allNotesForCurrentTask?.length <= 0">
-      <h6 class="display-6"> No Notes Yet</h6>
-    </div>
+    <label>Task Progress </label>
 
 
-    <div *ngFor="let note of allNotesForCurrentTask" class="card" style="width: 50vw;">
-      <div class="card-header">
-        {{ note?.heading }}
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">{{ note?.notes }}</h5>
-        <p class="card-text">Posted By - {{ note?.writtenBy }}</p>
+    <div class="col-md-8">
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" [style.width.%]="currentTaskPercentage" aria-valuenow="25"
+          aria-valuemin="0" aria-valuemax="100">{{ currentTaskPercentage }}%</div>
       </div>
     </div>
 
-    <button routerLink="/create-new-note/{{ currentTaskId }}" class="btn btn-primary">Add New Note</button>
+
+    <br />
+
+    <div class="col-md-8">
+      <div class="form-group">
+        <label for="percentageOfCompletion">Update the progress</label>
+        <input #percentageOfCompletion class="form-control" type="number" min="0" max="100"
+          name="percentageOfCompletion" id="percentageOfCompletion">
+        <div *ngIf="errMessage" class="alert alert-danger">{{ errMessage }}</div>
+        <button (click)="updatetaskProgress(percentageOfCompletion.value)" class="btn btn-primary">Update Task
+          Status</button>
+      </div>
+
+
+      <br />
+
+      <button *ngIf="!currentTask?.completed" (click)="changeState(true)" class="btn btn-success">Mark this Task as
+        Done</button>
+
+      <button *ngIf="currentTask?.completed" (click)="changeState(false)" class="btn btn-success">Re-Open Task</button>
+      <div *ngIf="isLoading" class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <br />
+
+      <h2 class="display-6">Notes</h2>
+
+      <br />
+
+      <div *ngIf="!allNotesForCurrentTask || allNotesForCurrentTask?.length <= 0">
+        <h6 class="display-6"> No Notes Yet</h6>
+      </div>
+
+
+      <div *ngFor="let note of allNotesForCurrentTask" class="card" style="width: 50vw;">
+        <div class="card-header">
+          {{ note?.heading }}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ note?.notes }}</h5>
+          <p class="card-text">Posted By - {{ note?.writtenBy }}</p>
+        </div>
+      </div>
+
+      <button routerLink="/create-new-note/{{ currentTaskId }}" class="btn btn-primary">Add New Note</button>
+    </div>
+
+
   </div>
-
-
-</div>

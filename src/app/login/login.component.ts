@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -14,6 +15,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errMessage: String;
 
+  authSub: Subscription;
+
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
@@ -25,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   submitLoginForm() {
     this.isLoading = true;
-    this.authService.login(this.loginForm.value).subscribe(
+    this.authSub = this.authService.login(this.loginForm.value).subscribe(
       (data: user) => {
         this.router.navigate(['/']);
         this.isLoading = false;

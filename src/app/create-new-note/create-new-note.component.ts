@@ -2,19 +2,23 @@ import { AuthService } from './../services/auth.service';
 import { TasksService } from './../services/tasks.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { user } from '../services/user-data.model';
 import { take } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-new-note',
   templateUrl: './create-new-note.component.html',
   styleUrls: ['./create-new-note.component.scss'],
 })
-export class CreateNewNoteComponent implements OnInit {
+export class CreateNewNoteComponent implements OnInit, OnDestroy {
   currentUserId: string = window.localStorage.getItem('userId');
 
   isLoading: boolean = false;
+
+  authSub: Subscription;
+  newNoteSub: Subscription;
 
   newNoteForm: FormGroup;
   currentTaskId: string;
@@ -33,14 +37,14 @@ export class CreateNewNoteComponent implements OnInit {
       notes: new FormControl('', Validators.required),
     });
 
-    this.authService
+    this.authSub = this.authService
       .getOneEmployee(this.currentUserId)
       .pipe(take(1))
       .subscribe((data: user) => {
         this.currentUserName = data.data.user.username;
       });
 
-    this.activatedRoute.params.subscribe((data) => {
+    this.activatedRoute.params.pipe(take(1)).subscribe((data) => {
       this.currentTaskId = data.taskId;
     });
   }
@@ -55,7 +59,7 @@ export class CreateNewNoteComponent implements OnInit {
 
   createNewNote() {
     this.isLoading = true;
-    this.taskService
+    this.newNoteSub = this.taskService
       .createNewTaskNote(
         this.currentTaskId,
         this.headingValue,
@@ -66,5 +70,10 @@ export class CreateNewNoteComponent implements OnInit {
         this.router.navigate(['/', 'view-task', this.currentTaskId]);
         this.isLoading = false;
       });
+  }
+
+  ngOnDestroy() {
+    this.authSub.unsubscribe();
+    this.newNoteSub.unsubscribe();
   }
 }
