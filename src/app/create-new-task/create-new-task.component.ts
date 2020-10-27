@@ -14,6 +14,8 @@ export class CreateNewTaskComponent implements OnInit, OnDestroy {
   taskForm: FormGroup;
   assignableUserId: string;
 
+  isLoading: boolean = false;
+
   taskSub: Subscription;
 
   constructor(
@@ -35,6 +37,7 @@ export class CreateNewTaskComponent implements OnInit, OnDestroy {
   }
 
   createNewTask() {
+    this.isLoading = true;
     let taskFormValueObj = {
       title: this.taskForm.get('title').value,
       description: this.taskForm.get('description').value,
@@ -45,6 +48,7 @@ export class CreateNewTaskComponent implements OnInit, OnDestroy {
     this.taskSub = this.taskService
       .createNewTask(createdBy, this.assignableUserId, taskFormValueObj)
       .subscribe((data) => {
+        this.isLoading = false;
         this.router.navigate(['/', 'emp-tasks-assign', this.assignableUserId]);
       });
   }

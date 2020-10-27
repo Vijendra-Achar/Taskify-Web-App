@@ -58,18 +58,16 @@ export class ViewTaskComponent implements OnInit, OnDestroy {
   }
 
   updatetaskProgress(value) {
-    this.taskSubPer = this.taskService
-      .updatetaskPercentage(value, this.currentTaskId)
-      .subscribe(
-        (data) => {
-          this.currentTaskPercentage = value;
-          this.errMessage = '';
-          console.log(data);
-        },
-        (error) => {
-          this.errMessage = error.error.message;
-        }
-      );
+    this.taskService.updatetaskPercentage(value, this.currentTaskId).subscribe(
+      (data) => {
+        this.currentTaskPercentage = value;
+        this.errMessage = '';
+        console.log(data);
+      },
+      (error) => {
+        this.errMessage = error.error.message;
+      }
+    );
   }
 
   changeState(state) {
@@ -79,7 +77,7 @@ export class ViewTaskComponent implements OnInit, OnDestroy {
       this.updatetaskProgress(0);
     }
     this.isLoading = true;
-    this.taskSubState = this.taskService
+    this.taskService
       .changeTaskState(this.currentTaskId, state)
       .subscribe(() => {
         this.router.navigate(['/', 'emp-tasks-assign', this.currentUserId]);
@@ -87,10 +85,5 @@ export class ViewTaskComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-    this.taskSub.unsubscribe();
-    this.taskSubId.unsubscribe();
-    this.taskSubPer.unsubscribe();
-    this.taskSubState.unsubscribe();
-  }
+  ngOnDestroy() {}
 }

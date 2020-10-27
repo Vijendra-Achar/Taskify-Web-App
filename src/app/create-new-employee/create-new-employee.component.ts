@@ -13,6 +13,8 @@ export class CreateNewEmployeeComponent implements OnInit, OnDestroy {
   signUpForm: FormGroup;
   errMessage: String;
 
+  isLoading: boolean = false;
+
   authSub: Subscription;
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -26,13 +28,16 @@ export class CreateNewEmployeeComponent implements OnInit, OnDestroy {
   }
 
   signUp() {
+    this.isLoading = true;
     console.log(this.signUpForm.value);
     this.authSub = this.authService.signUp(this.signUpForm.value).subscribe(
       () => {
         this.router.navigate(['/']);
+        this.isLoading = false;
       },
       (err) => {
         this.errMessage = err.error.error;
+        this.isLoading = false;
       }
     );
   }

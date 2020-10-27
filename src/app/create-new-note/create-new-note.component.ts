@@ -59,7 +59,7 @@ export class CreateNewNoteComponent implements OnInit, OnDestroy {
 
   createNewNote() {
     this.isLoading = true;
-    this.newNoteSub = this.taskService
+    this.taskService
       .createNewTaskNote(
         this.currentTaskId,
         this.headingValue,
@@ -74,6 +74,5 @@ export class CreateNewNoteComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.authSub.unsubscribe();
-    this.newNoteSub.unsubscribe();
   }
 }
